@@ -17,9 +17,8 @@ export const fr = {
     scrollCue: "Fais défiler pour suivre le soleil",
     bridge: "Et quand le soleil tape, pense à boire.",
     discover: "Découvrir",
-    closingTitle: "Faites avec soin, une à la fois.",
-    closingText:
-      "Chaque app d'Appyapp fait une chose et la fait bien. Pas de compte à créer, pas de publicité : tu télécharges, tu t'en sers.",
+    closingTitle: "Faites avec soin.",
+    closingText: "Chaque app d'Appyapp fait une chose, et la fait bien.",
   },
   sunory: {
     title: "Sunory, la course du soleil où que tu sois",

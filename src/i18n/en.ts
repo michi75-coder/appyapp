@@ -19,9 +19,8 @@ export const en: Dictionary = {
     scrollCue: "Scroll to follow the sun",
     bridge: "And when the sun beats down, remember to drink.",
     discover: "Discover",
-    closingTitle: "Made with care, one at a time.",
-    closingText:
-      "Each Appyapp app does one thing and does it well. No account to create, no ads: you download it and use it.",
+    closingTitle: "Made with care.",
+    closingText: "Each Appyapp app does one thing, and does it well.",
   },
   sunory: {
     title: "Sunory, the sun's path wherever you are",
