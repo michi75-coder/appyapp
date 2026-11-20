@@ -3,6 +3,7 @@ import "@fontsource-variable/bricolage-grotesque/opsz.css";
 import "@fontsource-variable/instrument-sans";
 import "../styles/global.css";
 
+import { CONTACT_EMAIL, contactMailto } from "../data/site";
 import { dictionaries, type Language, otherLanguage, type PageKey, pagePath } from "../i18n";
 
 type Props = {
@@ -87,7 +88,7 @@ const year = new Date().getFullYear();
       <div class="wrap">
         <span>
           {dictionary.footer.contact}{" "}
-          <a href="mailto:appyapp.contact@gmail.com">appyapp.contact@gmail.com</a>
+          <a href={contactMailto()}>{CONTACT_EMAIL}</a>
         </span>
         <span>© {year} Appyapp. {dictionary.footer.madeIn}</span>
       </div>

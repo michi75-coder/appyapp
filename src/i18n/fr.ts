@@ -6,6 +6,8 @@ export const fr = {
   stores: { appStoreSmall: "Télécharger dans", playSmall: "Disponible sur" },
   footer: {
     contact: "Une question, une idée ? Écris-nous :",
+    supportQuestion: "Une question qui n'est pas ici ? Écris-nous :",
+    support: "Assistance",
     madeIn: "Conçu et développé en France.",
   },
   home: {
@@ -132,7 +134,6 @@ export const fr = {
       },
     ],
     legal: "Conditions et confidentialité",
-    support: "Assistance",
     legalUrl: "https://michi75-coder.github.io/sunory-legal/",
     supportUrl: "https://michi75-coder.github.io/sunory-legal/support.html",
   },

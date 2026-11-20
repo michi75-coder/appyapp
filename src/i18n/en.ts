@@ -8,6 +8,8 @@ export const en: Dictionary = {
   stores: { appStoreSmall: "Download on the", playSmall: "Get it on" },
   footer: {
     contact: "A question, an idea? Write to us:",
+    supportQuestion: "A question that isn't answered here? Write to us:",
+    support: "Support",
     madeIn: "Designed and built in France.",
   },
   home: {
@@ -133,7 +135,6 @@ export const en: Dictionary = {
       },
     ],
     legal: "Terms and privacy",
-    support: "Support",
     legalUrl: "https://michi75-coder.github.io/sunory-legal/en/",
     supportUrl: "https://michi75-coder.github.io/sunory-legal/en/support.html",
   },

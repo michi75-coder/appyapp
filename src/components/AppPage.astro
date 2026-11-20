@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 
 import { apps, screenImage, storeShotImage, sunoryPhoto } from "../data/apps";
+import { CONTACT_EMAIL, contactMailto } from "../data/site";
 import { type AppSlug, dictionaries, type Language, pagePath } from "../i18n";
 import Base from "../layouts/Base.astro";
 import Phone from "./Phone.astro";
@@ -19,7 +20,8 @@ const heroScreens = firstStep
   ? [{ key: firstStep.screen, image: screenImage(app, language, firstStep.screen), alt: firstStep.title }]
   : [];
 const trust = "trustTitle" in appText ? { title: appText.trustTitle, text: appText.trustText } : null;
-const support = "supportUrl" in appText ? { url: appText.supportUrl, label: appText.support } : null;
+// Sunory has a support page of its own; otherwise support is a mail naming the app.
+const supportUrl = "supportUrl" in appText ? appText.supportUrl : contactMailto(name);
 const previousLabel = language === "fr" ? "Images précédentes" : "Previous pictures";
 const nextLabel = language === "fr" ? "Images suivantes" : "Next pictures";
 ---
@@ -125,17 +127,16 @@ const nextLabel = language === "fr" ? "Images suivantes" : "Next pictures";
             ))
           }
         </div>
+        <p class="faq-contact">
+          {dictionary.footer.supportQuestion} <a href={contactMailto(name)}>{CONTACT_EMAIL}</a>
+        </p>
         <div class="page-end">
           <StoreButtons app={app} language={language} />
           <p class="page-links">
             <a href={appText.legalUrl} target="_blank" rel="noopener">{appText.legal}</a>
-            {
-              support ? (
-                <a href={support.url} target="_blank" rel="noopener">
-                  {support.label}
-                </a>
-              ) : null
-            }
+            <a href={supportUrl} target={supportUrl.startsWith("mailto:") ? undefined : "_blank"} rel="noopener">
+              {dictionary.footer.support}
+            </a>
             <a href={pagePath(language, otherApp)}>{apps[otherApp].name}</a>
           </p>
         </div>
@@ -394,6 +395,14 @@ const nextLabel = language === "fr" ? "Images suivantes" : "Next pictures";
     padding-bottom: 1.25rem;
     color: var(--ivory-quiet);
     max-width: 60ch;
+  }
+  .faq-contact {
+    margin-top: 1.75rem;
+    color: var(--ivory-quiet);
+  }
+  .faq-contact a {
+    color: var(--accent);
+    font-weight: 600;
   }
   .page-end {
     margin-top: 3.5rem;
