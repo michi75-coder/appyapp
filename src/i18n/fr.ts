@@ -22,11 +22,11 @@ export const fr = {
       "Chaque app d'Appyapp fait une chose et la fait bien. Pas de compte à créer, pas de publicité : tu télécharges, tu t'en sers.",
   },
   sunory: {
-    title: "Sunory, la course du soleil chez toi",
+    title: "Sunory, la course du soleil où que tu sois",
     description:
-      "Sunory te montre où et quand le soleil passera chez toi : cadran du jour, Vue 3D sur ta caméra, carte avec l'ombre des bâtiments, heures de soleil d'un balcon sur toute l'année.",
+      "Sunory te montre où et quand le soleil passera, où que tu sois : cadran du jour, Vue 3D sur ta caméra, carte avec l'ombre des bâtiments, heures de soleil d'un balcon sur toute l'année.",
     tagline: "Suivre le soleil",
-    lead: "Le soleil chez toi, heure par heure, tous les jours de l'année.",
+    lead: "Le soleil où que tu sois, heure par heure, tous les jours de l'année.",
     detail:
       "Sunory tient compte des immeubles et du relief pour compter tes vraies heures de soleil. Pratique pour choisir un appartement, placer un potager, profiter d'une terrasse ou préparer une photo.",
     price:

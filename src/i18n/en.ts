@@ -24,11 +24,11 @@ export const en: Dictionary = {
       "Each Appyapp app does one thing and does it well. No account to create, no ads: you download it and use it.",
   },
   sunory: {
-    title: "Sunory, the sun's path at your place",
+    title: "Sunory, the sun's path wherever you are",
     description:
-      "Sunory shows you where and when the sun will reach your place: today's sun dial, a 3D view on your camera, a map with building shadows, a balcony's hours of sun over the whole year.",
+      "Sunory shows you where and when the sun will shine, wherever you are: today's sun dial, a 3D view on your camera, a map with building shadows, a balcony's hours of sun over the whole year.",
     tagline: "Follow the sun",
-    lead: "The sun at your place, hour by hour, every day of the year.",
+    lead: "The sun wherever you are, hour by hour, every day of the year.",
     detail:
       "Sunory takes buildings and terrain into account to count your real hours of sun. Handy for choosing a flat, placing a vegetable patch, enjoying a terrace or planning a photo.",
     price:
