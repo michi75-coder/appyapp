@@ -1,0 +1,427 @@
+---
+import { Image } from "astro:assets";
+
+import { apps, screenImage, storeShotImage, sunoryPhoto } from "../data/apps";
+import { type AppSlug, dictionaries, type Language, pagePath } from "../i18n";
+import Base from "../layouts/Base.astro";
+import Phone from "./Phone.astro";
+import StoreButtons from "./StoreButtons.astro";
+
+type Props = { app: AppSlug; language: Language };
+
+const { app, language } = Astro.props;
+const dictionary = dictionaries[language];
+const appText = dictionary[app];
+const { name, icon, storeShots } = apps[app];
+const otherApp: AppSlug = app === "sunory" ? "aquashot" : "sunory";
+const firstStep = appText.steps[0];
+const heroScreens = firstStep
+  ? [{ key: firstStep.screen, image: screenImage(app, language, firstStep.screen), alt: firstStep.title }]
+  : [];
+const trust = "trustTitle" in appText ? { title: appText.trustTitle, text: appText.trustText } : null;
+const support = "supportUrl" in appText ? { url: appText.supportUrl, label: appText.support } : null;
+const previousLabel = language === "fr" ? "Images précédentes" : "Previous pictures";
+const nextLabel = language === "fr" ? "Images suivantes" : "Next pictures";
+---
+
+<Base language={language} page={app} title={appText.title} description={appText.description}>
+  <div class:list={["app-page", `app-${app}`]}>
+    <section class="app-hero">
+      {
+        app === "sunory" ? (
+          <Image src={sunoryPhoto} alt="" class="app-hero-photo" widths={[800, 1100]} sizes="100vw" loading="eager" />
+        ) : null
+      }
+      <div class="wrap app-hero-grid">
+        <div class="app-hero-copy">
+          <div class="app-title">
+            <Image src={icon} alt="" width={96} height={96} class="app-icon" loading="eager" />
+            <div>
+              <p class="app-tagline">{appText.tagline}</p>
+              <h1>{name}</h1>
+            </div>
+          </div>
+          <p class="app-lead">{appText.lead}</p>
+          <p class="app-detail">{appText.detail}</p>
+          <StoreButtons app={app} language={language} />
+          <p class="app-price">{appText.price}</p>
+        </div>
+        <Phone screens={heroScreens} class="app-hero-phone" isEager />
+      </div>
+    </section>
+
+    <section class="gallery" data-gallery aria-labelledby="gallery-title">
+      <div class="wrap gallery-head">
+        <h2 id="gallery-title">{appText.galleryTitle}</h2>
+        <div class="gallery-buttons">
+          <button type="button" data-gallery-previous aria-label={previousLabel}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"></path></svg>
+          </button>
+          <button type="button" data-gallery-next aria-label={nextLabel}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg>
+          </button>
+        </div>
+      </div>
+      <ul class="gallery-track" data-gallery-track tabindex="0" aria-label={appText.galleryTitle}>
+        {
+          storeShots.map((shot) => (
+            <li>
+              <Image
+                src={storeShotImage(app, language, shot)}
+                alt=""
+                widths={[300, 600]}
+                sizes="(max-width: 760px) 62vw, 300px"
+                loading="lazy"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <h2 id="features-title">{appText.featuresTitle}</h2>
+        <ul class="feature-list">
+          {
+            appText.features.map((feature) => (
+              <li>
+                <h3>{feature.title}</h3>
+                <p>{feature.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="assurances">
+      <div class="wrap assurance-grid">
+        {
+          trust ? (
+            <div>
+              <h2>{trust.title}</h2>
+              <p>{trust.text}</p>
+            </div>
+          ) : null
+        }
+        <div>
+          <h2>{appText.privacyTitle}</h2>
+          <p>{appText.privacyText}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 id="faq-title">{appText.faqTitle}</h2>
+        <div class="faq-list">
+          {
+            appText.faq.map((entry) => (
+              <details>
+                <summary>{entry.question}</summary>
+                <p>{entry.answer}</p>
+              </details>
+            ))
+          }
+        </div>
+        <div class="page-end">
+          <StoreButtons app={app} language={language} />
+          <p class="page-links">
+            <a href={appText.legalUrl} target="_blank" rel="noopener">{appText.legal}</a>
+            {
+              support ? (
+                <a href={support.url} target="_blank" rel="noopener">
+                  {support.label}
+                </a>
+              ) : null
+            }
+            <a href={pagePath(language, otherApp)}>{apps[otherApp].name}</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .app-sunory {
+    --accent: var(--gold);
+    --ground: var(--night);
+  }
+  .app-aquashot {
+    --accent: var(--lagoon);
+    --ground: var(--abyss);
+  }
+  .app-page {
+    background: var(--ground);
+  }
+  .app-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(7rem, 16vh, 10rem) clamp(4rem, 10vh, 6rem);
+  }
+  .app-aquashot .app-hero {
+    background:
+      radial-gradient(55rem 35rem at 15% 20%, rgba(108, 85, 224, 0.3), transparent 65%),
+      radial-gradient(45rem 30rem at 90% 70%, rgba(95, 184, 255, 0.16), transparent 60%);
+  }
+  .app-hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 40%;
+    opacity: 0.55;
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.6) 45%, #000 80%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.6) 45%, #000 80%);
+  }
+  .app-sunory .app-hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 30%;
+    background: linear-gradient(to bottom, transparent, var(--night));
+  }
+  .app-hero-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+  }
+  .app-title {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .app-icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 24px;
+    box-shadow: 0 0 0 1px var(--ivory-faint), 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  }
+  .app-tagline {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 1.1rem;
+  }
+  .app-hero h1 {
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+  .app-lead {
+    margin-top: 1.75rem;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    line-height: 1.25;
+    max-width: 24ch;
+    text-wrap: balance;
+  }
+  .app-detail {
+    margin: 1.25rem 0 2rem;
+    max-width: 46ch;
+    color: var(--ivory-quiet);
+    font-size: 1.1rem;
+  }
+  .app-price {
+    margin-top: 1.25rem;
+    max-width: 46ch;
+    font-size: 0.98rem;
+    color: var(--ivory-quiet);
+  }
+  .app-hero-grid :global(.app-hero-phone) {
+    height: min(72vh, 640px);
+    width: auto;
+    justify-self: center;
+  }
+
+  .gallery {
+    padding-block: clamp(3rem, 8vh, 5rem);
+  }
+  .gallery-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .gallery h2,
+  .features h2,
+  .faq h2 {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .gallery-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .gallery-buttons button {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: 1px solid var(--ivory-faint);
+    background: transparent;
+    color: var(--ivory);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+  .gallery-buttons button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .gallery-buttons svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .gallery-track {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0 max(var(--page-gutter), calc((100vw - var(--content-width)) / 2)) 1rem;
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(var(--page-gutter), calc((100vw - var(--content-width)) / 2));
+    scrollbar-width: thin;
+    scrollbar-color: var(--ivory-faint) transparent;
+  }
+  .gallery-track li {
+    flex: none;
+    width: clamp(220px, 62vw, 300px);
+    scroll-snap-align: start;
+  }
+  .gallery-track img {
+    width: 100%;
+    border-radius: 22px;
+    box-shadow: 0 0 0 1px var(--ivory-faint);
+  }
+
+  .features {
+    padding-block: clamp(3rem, 10vh, 6rem);
+  }
+  .feature-list {
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.75rem clamp(2rem, 6vw, 5rem);
+  }
+  .feature-list li {
+    border-top: 2px solid var(--accent);
+    padding-top: 1.1rem;
+  }
+  .feature-list h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .feature-list p {
+    margin-top: 0.6rem;
+    color: var(--ivory-quiet);
+    max-width: 44ch;
+  }
+
+  .assurances {
+    padding-block: clamp(3rem, 10vh, 6rem);
+  }
+  .assurance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 3rem clamp(2rem, 6vw, 5rem);
+  }
+  .assurances h2 {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--accent);
+  }
+  .assurances p {
+    margin-top: 1rem;
+    font-size: 1.15rem;
+    max-width: 44ch;
+  }
+
+  .faq {
+    padding-block: clamp(3rem, 10vh, 6rem) clamp(4rem, 12vh, 7rem);
+  }
+  .faq-list {
+    margin-top: 2rem;
+    max-width: 46rem;
+  }
+  .faq details {
+    border-bottom: 1px solid var(--ivory-faint);
+  }
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 1.15rem 2.5rem 1.15rem 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary::after {
+    content: "";
+    position: absolute;
+    right: 0.4rem;
+    top: 50%;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transform: translateY(-70%) rotate(45deg);
+    transition: transform 0.25s ease;
+  }
+  .faq details[open] summary::after {
+    transform: translateY(-30%) rotate(225deg);
+  }
+  .faq details p {
+    padding-bottom: 1.25rem;
+    color: var(--ivory-quiet);
+    max-width: 60ch;
+  }
+  .page-end {
+    margin-top: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .page-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    color: var(--ivory-quiet);
+  }
+
+  @media (max-width: 760px) {
+    .app-hero-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .app-hero-grid :global(.app-hero-phone) {
+      height: 60svh;
+    }
+    .app-hero-photo {
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), #000 70%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), #000 70%);
+      opacity: 0.4;
+    }
+    .feature-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

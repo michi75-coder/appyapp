@@ -1,0 +1,173 @@
+---
+import { dictionaries, type Language } from "../i18n";
+
+type Props = { language: Language };
+
+const { language } = Astro.props;
+const { home } = dictionaries[language];
+
+const HORIZON_Y = 760;
+const PEAK_Y = 250;
+// [left, width, height] of a small town on the horizon, drawn in the SVG's own units.
+const BUILDINGS: [number, number, number][] = [[330, 48, 74], [386, 34, 58], [420, 48, 40], [468, 34, 58], [510, 56, 58], [566, 34, 96], [600, 62, 58], [662, 62, 40], [732, 34, 92], [766, 62, 74], [832, 56, 74], [888, 62, 120], [1180, 30, 44], [1216, 30, 30], [1256, 30, 44], [1292, 46, 78], [1344, 38, 78], [1388, 38, 44]];
+const STARS: [number, number, number][] = [[1451, 419, 1.2], [187, 314, 1.6], [1095, 273, 1.6], [1513, 249, 1.6], [1267, 57, 1.2], [1068, 234, 1.2], [1570, 195, 1.2], [1021, 235, 1.2], [1388, 59, 2.2], [1193, 424, 1.6], [716, 375, 1.6], [1237, 274, 2.2], [954, 55, 1.2], [572, 262, 2.2], [1380, 53, 1.2], [1517, 379, 1.6], [1345, 315, 2.2], [932, 165, 2.2], [810, 474, 2.2], [730, 31, 1.6], [747, 106, 2.2], [259, 272, 1.2], [466, 413, 1.6], [284, 398, 1.2], [834, 220, 1.6], [185, 105, 1.6], [842, 301, 1.6], [300, 439, 1.6], [1146, 162, 2.2], [870, 203, 2.2], [799, 510, 1.2], [329, 62, 1.2], [329, 138, 2.2], [497, 26, 1.6], [1226, 113, 1.6], [597, 22, 1.2], [878, 293, 1.6], [1268, 309, 1.6], [277, 373, 2.2], [1284, 355, 2.2], [1535, 47, 1.6], [1413, 428, 2.2], [823, 223, 1.6], [827, 73, 1.6], [1319, 225, 1.2], [410, 54, 1.2], [922, 103, 1.2], [716, 327, 1.2], [229, 20, 2.2], [329, 294, 1.2], [764, 334, 1.2], [164, 467, 1.2], [1277, 212, 1.2], [1319, 149, 1.6], [1253, 206, 1.6], [271, 79, 1.6], [974, 265, 1.6], [658, 63, 1.2], [229, 403, 1.6], [1536, 155, 1.6], [1437, 102, 2.2], [67, 125, 2.2], [760, 95, 2.2], [1132, 488, 1.2], [1572, 290, 1.6], [1336, 462, 1.2], [1445, 452, 1.6], [1081, 207, 1.2], [748, 415, 1.2], [1110, 297, 2.2]];
+const WINDOWS: [number, number][] = [[349, 696], [361, 728], [361, 744], [393, 712], [405, 712], [393, 728], [439, 746], [451, 746], [475, 712], [487, 712], [541, 712], [517, 744], [585, 706], [573, 722], [585, 722], [607, 712], [631, 728], [643, 728], [705, 730], [669, 746], [681, 746], [693, 746], [739, 678], [739, 694], [809, 696], [785, 712], [797, 712], [773, 728], [839, 696], [863, 696], [875, 696], [907, 666], [907, 682], [919, 682], [895, 698], [907, 698], [919, 698], [919, 714], [907, 730], [895, 746], [1187, 742], [1263, 726], [1275, 726], [1275, 742], [1323, 692], [1299, 724], [1311, 740], [1323, 740], [1351, 692], [1351, 708], [1363, 708], [1363, 740], [1395, 726]];
+---
+
+<section class="sky-scene" data-scene="sky" data-peak={PEAK_Y}>
+  <div class="sky-stage">
+    <svg class="sky-art" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="sun-glow">
+          <stop offset="0" stop-color="#f6d9a0" stop-opacity="0.75"></stop>
+          <stop offset="0.45" stop-color="#e7b76b" stop-opacity="0.22"></stop>
+          <stop offset="1" stop-color="#e7b76b" stop-opacity="0"></stop>
+        </radialGradient>
+        <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color: var(--ground-top, #1a2436)"></stop>
+          <stop offset="1" stop-color="#0f1724"></stop>
+        </linearGradient>
+      </defs>
+      <g class="stars">
+        {STARS.map(([starX, starY, radius]) => <circle cx={starX} cy={starY} r={radius} />)}
+      </g>
+      <path
+        class="sun-arc"
+        data-sun-arc
+        d={`M 60 ${HORIZON_Y} C 360 80, 1240 80, 1540 ${HORIZON_Y}`}
+      ></path>
+      <path
+        class="sun-arc-travelled"
+        data-sun-travelled
+        d={`M 60 ${HORIZON_Y} C 360 80, 1240 80, 1540 ${HORIZON_Y}`}
+      ></path>
+      <g data-sun transform={`translate(60 ${HORIZON_Y})`}>
+        <circle class="sun-glow" r="150" fill="url(#sun-glow)"></circle>
+        <circle class="sun-core" r="34"></circle>
+      </g>
+      <rect class="ground" x="0" y={HORIZON_Y} width="1600" height={1000 - HORIZON_Y} fill="url(#ground)"></rect>
+      <line class="horizon" x1="0" x2="1600" y1={HORIZON_Y} y2={HORIZON_Y}></line>
+      <g class="shadows">
+        {
+          BUILDINGS.map(([left, width, height]) => (
+            <polygon data-shadow data-left={left} data-width={width} data-height={height} points="0,0" />
+          ))
+        }
+      </g>
+      <g class="town">
+        {BUILDINGS.map(([left, width, height]) => <rect x={left} y={HORIZON_Y - height} width={width} height={height} />)}
+      </g>
+      <g class="windows">
+        {WINDOWS.map(([windowX, windowY]) => <rect x={windowX} y={windowY} width="5" height="7" />)}
+      </g>
+    </svg>
+
+    <div class="sky-copy wrap">
+      <h1>{home.heroTitle}</h1>
+      <p>{home.heroText}</p>
+    </div>
+    <p class="scroll-cue">{home.scrollCue}</p>
+  </div>
+</section>
+
+<style>
+  .sky-scene {
+    --p: 0;
+    --sun-height: 0;
+    --sky-top: rgb(36, 31, 61);
+    --sky-bottom: rgb(217, 137, 122);
+    position: relative;
+    height: 320vh;
+    background: var(--night);
+  }
+  .sky-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    background: linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-bottom) 78%);
+  }
+  .sky-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .stars circle {
+    fill: var(--ivory);
+    opacity: clamp(0, calc((var(--p) - 0.82) * 6), 0.85);
+  }
+  .sun-arc {
+    fill: none;
+    stroke: var(--ivory);
+    stroke-opacity: 0.35;
+    stroke-width: 2.5;
+    stroke-dasharray: 3 12;
+    stroke-linecap: round;
+  }
+  .sun-arc-travelled {
+    fill: none;
+    stroke: var(--gold-pale);
+    stroke-width: 4;
+    stroke-linecap: round;
+    opacity: 0.9;
+  }
+  .sun-core {
+    fill: var(--gold-pale);
+  }
+  .sun-glow {
+    opacity: calc(0.55 + var(--sun-height) * 0.45);
+  }
+  .horizon {
+    stroke: var(--ivory);
+    stroke-opacity: 0.25;
+    stroke-width: 1.5;
+  }
+  .shadows polygon {
+    fill: #06090f;
+    transition: opacity 0.4s ease;
+  }
+  .town rect {
+    fill: #0b111c;
+  }
+  .windows rect {
+    fill: var(--gold);
+    opacity: clamp(0, calc((var(--p) - 0.84) * 7), 0.9);
+  }
+  .sky-copy {
+    position: relative;
+    padding-top: clamp(7rem, 16vh, 11rem);
+    transform: translateY(calc(var(--p) * -14vh));
+    opacity: clamp(0, calc(1.4 - var(--p) * 3.5), 1);
+  }
+  .sky-copy h1 {
+    font-size: clamp(2.8rem, 8.5vw, 7rem);
+    font-weight: 800;
+    max-width: 13ch;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    text-shadow: 0 2px 30px rgba(15, 23, 36, 0.25);
+  }
+  .sky-copy p {
+    margin-top: 1.5rem;
+    max-width: 38ch;
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    color: var(--ivory);
+    opacity: 0.85;
+  }
+  .scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 2rem;
+    translate: -50% 0;
+    font-size: 0.9rem;
+    color: var(--ivory-quiet);
+    opacity: clamp(0, calc(1 - var(--p) * 12), 1);
+  }
+  @media (max-width: 760px) {
+    .sky-scene {
+      height: 260vh;
+    }
+  }
+</style>
