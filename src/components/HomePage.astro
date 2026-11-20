@@ -1,0 +1,106 @@
+---
+import { Image } from "astro:assets";
+
+import { apps } from "../data/apps";
+import { dictionaries, type Language, pagePath } from "../i18n";
+import Base from "../layouts/Base.astro";
+import Chapter from "./Chapter.astro";
+import SkyHero from "./SkyHero.astro";
+import WaterBridge from "./WaterBridge.astro";
+
+type Props = { language: Language };
+
+const { language } = Astro.props;
+const dictionary = dictionaries[language];
+const { home } = dictionary;
+---
+
+<Base language={language} page="home" title={home.title} description={home.description}>
+  <SkyHero language={language} />
+  <Chapter app="sunory" language={language} />
+  <WaterBridge language={language} />
+  <Chapter app="aquashot" language={language} isPhoneOnRight />
+
+  <section class="closing" aria-labelledby="closing-title">
+    <div class="wrap closing-inner">
+      <h2 id="closing-title">{home.closingTitle}</h2>
+      <p>{home.closingText}</p>
+      <ul class="closing-apps">
+        {
+          (["sunory", "aquashot"] as const).map((app) => (
+            <li>
+              <a href={pagePath(language, app)}>
+                <Image src={apps[app].icon} alt="" width={64} height={64} />
+                <span>
+                  <strong>{apps[app].name}</strong>
+                  <small>{dictionary[app].tagline}</small>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .closing {
+    background:
+      radial-gradient(50rem 30rem at 20% 0%, rgba(108, 85, 224, 0.18), transparent 60%),
+      radial-gradient(40rem 26rem at 85% 100%, rgba(231, 183, 107, 0.12), transparent 60%),
+      var(--night);
+    border-top: 1px solid var(--ivory-faint);
+  }
+  .closing-inner {
+    padding-block: clamp(5rem, 14vh, 9rem);
+  }
+  .closing h2 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    max-width: 16ch;
+    letter-spacing: -0.03em;
+  }
+  .closing p {
+    margin-top: 1.25rem;
+    max-width: 44ch;
+    font-size: 1.2rem;
+    color: var(--ivory-quiet);
+  }
+  .closing-apps {
+    list-style: none;
+    padding: 0;
+    margin: 2.5rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+  }
+  .closing-apps a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+  }
+  .closing-apps img {
+    width: 64px;
+    height: 64px;
+    border-radius: 17px;
+    box-shadow: 0 0 0 1px var(--ivory-faint);
+    transition: transform 0.2s ease;
+  }
+  .closing-apps a:hover img {
+    transform: rotate(-4deg) scale(1.04);
+  }
+  .closing-apps span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .closing-apps strong {
+    font: 700 1.35rem var(--font-display);
+  }
+  .closing-apps small {
+    color: var(--ivory-quiet);
+    font-size: 0.95rem;
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+import "@fontsource-variable/bricolage-grotesque/opsz.css";
+import "@fontsource-variable/instrument-sans";
+import "../styles/global.css";
+
+import { CONTACT_EMAIL, contactMailto } from "../data/site";
+import { dictionaries, type Language, otherLanguage, type PageKey, pagePath } from "../i18n";
+
+type Props = {
+  language: Language;
+  page: PageKey;
+  title: string;
+  description: string;
+};
+
+const { language, page, title, description } = Astro.props;
+const dictionary = dictionaries[language];
+const otherLanguagePath = pagePath(otherLanguage(language), page);
+const canonical = new URL(pagePath(language, page), Astro.site).href;
+const frenchUrl = new URL(pagePath("fr", page), Astro.site).href;
+const englishUrl = new URL(pagePath("en", page), Astro.site).href;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang={language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr" href={frenchUrl} />
+    <link rel="alternate" hreflang="en" href={englishUrl} />
+    <link rel="alternate" hreflang="x-default" href={englishUrl} />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <meta name="theme-color" content="#0f1724" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={language === "fr" ? "fr_FR" : "en_US"} />
+    {
+      language === "fr" ? (
+        <script is:inline define:vars={{ englishPath: otherLanguagePath }}>
+          // A first visit from a browser in another language lands on the English page, once.
+          try {
+            const savedLanguage = localStorage.getItem("appyapp-language");
+            const browserLanguage = (navigator.language || "fr").toLowerCase();
+            if (!savedLanguage && !browserLanguage.startsWith("fr")) {
+              location.replace(englishPath);
+            }
+          } catch (storageError) {}
+        </script>
+      ) : null
+    }
+  </head>
+  <body data-page={page}>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href={pagePath(language, "home")}>Appyapp</a>
+        <nav class="site-nav" aria-label="Appyapp">
+          <a class="nav-app" href={pagePath(language, "sunory")} aria-current={page === "sunory" ? "page" : undefined}>
+            {dictionary.nav.sunory}
+          </a>
+          <a class="nav-app" href={pagePath(language, "aquashot")} aria-current={page === "aquashot" ? "page" : undefined}>
+            {dictionary.nav.aquashot}
+          </a>
+          <a
+            class="language-link"
+            href={otherLanguagePath}
+            hreflang={otherLanguage(language)}
+            lang={otherLanguage(language)}
+            data-language={otherLanguage(language)}
+          >
+            <span aria-hidden="true">{dictionary.otherLanguageShort}</span>
+            <span class="visually-hidden">{dictionary.otherLanguageLabel}</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <span>
+          {dictionary.footer.contact}{" "}
+          <a href={contactMailto()}>{CONTACT_EMAIL}</a>
+        </span>
+        <span>© {year} Appyapp. {dictionary.footer.madeIn}</span>
+      </div>
+    </footer>
+
+    <script>
+      import { startPage } from "../scripts/page";
+      startPage();
+    </script>
+  </body>
+</html>

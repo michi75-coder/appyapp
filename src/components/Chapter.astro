@@ -1,0 +1,263 @@
+---
+import { Image } from "astro:assets";
+
+import { apps, screenImage } from "../data/apps";
+import { type AppSlug, dictionaries, type Language, pagePath } from "../i18n";
+import Phone from "./Phone.astro";
+import StoreButtons from "./StoreButtons.astro";
+
+type Props = { app: AppSlug; language: Language; isPhoneOnRight?: boolean };
+
+const { app, language, isPhoneOnRight = false } = Astro.props;
+const dictionary = dictionaries[language];
+const appText = dictionary[app];
+const { name, icon } = apps[app];
+const screens = appText.steps.map((step) => ({
+  key: step.screen,
+  image: screenImage(app, language, step.screen),
+  alt: step.title,
+}));
+---
+
+<section class:list={["chapter", `chapter-${app}`, { "is-phone-right": isPhoneOnRight }]} data-chapter aria-labelledby={`${app}-chapter-title`}>
+  <div class="wrap">
+    <header class="chapter-head">
+      <Image src={icon} alt="" width={84} height={84} class="chapter-icon" />
+      <div>
+        <p class="chapter-tagline">{appText.tagline}</p>
+        <h2 id={`${app}-chapter-title`}>{name}</h2>
+      </div>
+      <p class="chapter-lead">{appText.lead}</p>
+    </header>
+
+    <div class="chapter-grid">
+      <div class="chapter-phone-column">
+        <Phone screens={screens} class="chapter-phone" />
+      </div>
+      <div class="chapter-steps">
+        <ul>
+          {
+            appText.steps.map((step) => (
+              <li data-step={step.screen}>
+                <div class="step-phone">
+                  <Phone screens={[{ key: step.screen, image: screenImage(app, language, step.screen), alt: step.title }]} />
+                </div>
+                <div class="step-text">
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                  <ul class="step-points">
+                    {step.points.map((point) => <li>{point}</li>)}
+                  </ul>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="chapter-cta">
+          <a class="button" href={pagePath(language, app)}>{dictionary.home.discover} {name}</a>
+          <StoreButtons app={app} language={language} />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chapter {
+    position: relative;
+    padding-block: clamp(5rem, 12vh, 9rem) clamp(4rem, 10vh, 7rem);
+  }
+  .chapter-sunory {
+    --accent: var(--gold);
+    background:
+      radial-gradient(70rem 40rem at 90% 10%, rgba(231, 183, 107, 0.09), transparent 60%),
+      var(--night);
+  }
+  .chapter-aquashot {
+    --accent: var(--lagoon);
+    background:
+      radial-gradient(60rem 40rem at 10% 30%, rgba(108, 85, 224, 0.25), transparent 65%),
+      radial-gradient(50rem 30rem at 95% 80%, rgba(95, 184, 255, 0.12), transparent 60%),
+      var(--abyss);
+  }
+  .chapter-head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 1.25rem;
+    row-gap: 1.25rem;
+    max-width: 46rem;
+  }
+  .chapter-icon {
+    width: 84px;
+    height: 84px;
+    border-radius: 22px;
+    box-shadow: 0 0 0 1px var(--ivory-faint);
+  }
+  .chapter-tagline {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 1.05rem;
+  }
+  .chapter-head h2 {
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+  }
+  .chapter-lead {
+    grid-column: 1 / -1;
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    line-height: 1.35;
+    max-width: 30ch;
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--ivory);
+  }
+  .chapter-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    margin-top: 2rem;
+  }
+  .is-phone-right .chapter-phone-column {
+    order: 2;
+  }
+  .chapter-phone-column {
+    position: relative;
+  }
+  .chapter-phone-column :global(.chapter-phone) {
+    position: sticky;
+    top: calc(50vh - min(34vh, 330px));
+    height: min(68vh, 660px);
+    width: auto;
+    margin-inline: auto;
+  }
+  .chapter-steps > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .chapter-steps > ul > li {
+    min-height: 78vh;
+    display: flex;
+    align-items: center;
+  }
+  .step-text {
+    max-width: 32rem;
+    opacity: 0.32;
+    transform: translateY(12px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+  .chapter-steps > ul > li:global(.is-current) .step-text {
+    opacity: 1;
+    transform: none;
+  }
+  .step-text h3 {
+    font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .step-text p {
+    margin-top: 0.9rem;
+    font-size: 1.15rem;
+    color: var(--ivory-quiet);
+    max-width: 34ch;
+  }
+  .step-points {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+  .step-points li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--ivory);
+    font-size: 1.02rem;
+    line-height: 1.45;
+  }
+  /* The sun's or the water's mark, small, in the chapter's colour. */
+  .step-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+  .chapter-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-bottom: 2rem;
+  }
+
+  .step-phone {
+    display: none;
+  }
+
+  /*
+   * On a phone, a sticky phone and the text scrolling over it fight for the same screen: each step
+   * shows its own screen above its text instead, and the phone comes in as it scrolls into view.
+   */
+  @media (max-width: 760px) {
+    .chapter-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      margin-top: 1rem;
+    }
+    .chapter-phone-column {
+      display: none;
+    }
+    .chapter-steps > ul > li {
+      min-height: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.75rem;
+      padding-block: 2.5rem;
+    }
+    .step-phone {
+      display: block;
+    }
+    .step-phone :global(.phone) {
+      width: min(62vw, 260px);
+      margin-inline: auto;
+    }
+    .step-text,
+    .chapter-steps > ul > li:global(.is-current) .step-text {
+      opacity: 1;
+      transform: none;
+    }
+    .chapter-cta {
+      padding-block: 1.5rem 1rem;
+    }
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        .step-phone :global(.phone) {
+          animation: phone-arrives linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 35%;
+        }
+      }
+    }
+  }
+
+  @keyframes phone-arrives {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.92) rotate(-3deg);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

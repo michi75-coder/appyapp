@@ -1,0 +1,73 @@
+---
+import { dictionaries, type Language } from "../i18n";
+
+type Props = { language: Language };
+
+const { language } = Astro.props;
+const { home } = dictionaries[language];
+---
+
+<section class="water-scene" data-scene="water">
+  <div class="water-stage">
+    <p class="water-line">{home.bridge}</p>
+    <div class="water" aria-hidden="true">
+      <svg class="wave" viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path d="M0 20 Q 75 0 150 20 T 300 20 T 450 20 T 600 20 T 750 20 T 900 20 T 1050 20 T 1200 20 V 40 H 0 Z"></path>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .water-scene {
+    --p: 0;
+    position: relative;
+    height: 200vh;
+    background: var(--night);
+  }
+  .water-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .water-line {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 5.5vw, 4.4rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    max-width: 16ch;
+    text-align: center;
+    text-wrap: balance;
+    padding-inline: var(--page-gutter);
+    opacity: clamp(0, calc(var(--p) * 4), 1);
+    transform: translateY(calc((1 - var(--p)) * 6vh));
+  }
+  /* The water rises with the scroll until it fills the screen, in AquaShot's colours. */
+  .water {
+    position: absolute;
+    inset: auto 0 0;
+    height: calc(var(--p) * 115%);
+    background: linear-gradient(to bottom, var(--lagoon-deep) 0%, #241a6a 45%, var(--abyss) 100%);
+  }
+  .wave {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% - 1px);
+    width: 200%;
+    height: 28px;
+    fill: var(--lagoon-deep);
+    animation: drift 9s linear infinite;
+  }
+  @keyframes drift {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>
