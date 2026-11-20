@@ -13,8 +13,7 @@ export const fr = {
     description:
       "Appyapp conçoit de petites apps soignées pour le quotidien : Sunory pour suivre le soleil, AquaShot pour boire assez d'eau.",
     heroTitle: "Des apps utiles, qui respectent ta vie privée.",
-    heroText:
-      "Appyapp conçoit de petites apps soignées pour le quotidien. Deux pour commencer : une pour suivre le soleil, une pour boire assez d'eau.",
+    heroText: "Appyapp conçoit de petites apps soignées pour le quotidien.",
     scrollCue: "Fais défiler pour suivre le soleil",
     bridge: "Et quand le soleil tape, pense à boire.",
     discover: "Découvrir",
@@ -27,7 +26,7 @@ export const fr = {
     description:
       "Sunory te montre où et quand le soleil passera chez toi : cadran du jour, Vue 3D sur ta caméra, carte avec l'ombre des bâtiments, heures de soleil d'un balcon sur toute l'année.",
     tagline: "Suivre le soleil",
-    lead: "Où et quand le soleil passera chez toi, aujourd'hui ou n'importe quel jour de l'année.",
+    lead: "Le soleil chez toi, heure par heure, tous les jours de l'année.",
     detail:
       "Sunory tient compte des immeubles et du relief pour compter tes vraies heures de soleil. Pratique pour choisir un appartement, placer un potager, profiter d'une terrasse ou préparer une photo.",
     price:

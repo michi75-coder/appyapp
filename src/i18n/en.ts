@@ -15,8 +15,7 @@ export const en: Dictionary = {
     description:
       "Appyapp makes small, carefully built apps for everyday life: Sunory to follow the sun, AquaShot to drink enough water.",
     heroTitle: "Useful apps that respect your privacy.",
-    heroText:
-      "Appyapp makes small, carefully built apps for everyday life. Two to begin with: one to follow the sun, one to drink enough water.",
+    heroText: "Appyapp makes small, carefully built apps for everyday life.",
     scrollCue: "Scroll to follow the sun",
     bridge: "And when the sun beats down, remember to drink.",
     discover: "Discover",
@@ -29,7 +28,7 @@ export const en: Dictionary = {
     description:
       "Sunory shows you where and when the sun will reach your place: today's sun dial, a 3D view on your camera, a map with building shadows, a balcony's hours of sun over the whole year.",
     tagline: "Follow the sun",
-    lead: "Where and when the sun will reach your place, today or on any day of the year.",
+    lead: "The sun at your place, hour by hour, every day of the year.",
     detail:
       "Sunory takes buildings and terrain into account to count your real hours of sun. Handy for choosing a flat, placing a vegetable patch, enjoying a terrace or planning a photo.",
     price:
