@@ -13,9 +13,9 @@ export const en: Dictionary = {
   home: {
     title: "Appyapp, useful apps that respect your privacy",
     description:
-      "Appyapp makes small, carefully built apps for everyday life: Sunory to follow the sun, AquaShot to drink enough water.",
+      "Appyapp makes carefully built apps for everyday life: Sunory to follow the sun, AquaShot to drink enough water.",
     heroTitle: "Useful apps that respect your privacy.",
-    heroText: "Appyapp makes small, carefully built apps for everyday life.",
+    heroText: "Appyapp makes carefully built apps for everyday life.",
     scrollCue: "Scroll to follow the sun",
     bridge: "And when the sun beats down, remember to drink.",
     discover: "Discover",

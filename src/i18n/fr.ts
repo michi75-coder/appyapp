@@ -11,9 +11,9 @@ export const fr = {
   home: {
     title: "Appyapp, des apps utiles qui respectent ta vie privée",
     description:
-      "Appyapp conçoit de petites apps soignées pour le quotidien : Sunory pour suivre le soleil, AquaShot pour boire assez d'eau.",
+      "Appyapp conçoit des apps soignées pour le quotidien : Sunory pour suivre le soleil, AquaShot pour boire assez d'eau.",
     heroTitle: "Des apps utiles, qui respectent ta vie privée.",
-    heroText: "Appyapp conçoit de petites apps soignées pour le quotidien.",
+    heroText: "Appyapp conçoit des apps soignées pour le quotidien.",
     scrollCue: "Fais défiler pour suivre le soleil",
     bridge: "Et quand le soleil tape, pense à boire.",
     discover: "Découvrir",
