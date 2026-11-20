@@ -42,6 +42,9 @@ const screens = appText.steps.map((step) => ({
                 <div class="step-text">
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
+                  <ul class="step-points">
+                    {step.points.map((point) => <li>{point}</li>)}
+                  </ul>
                 </div>
               </li>
             ))
@@ -127,25 +130,25 @@ const screens = appText.steps.map((step) => ({
     width: auto;
     margin-inline: auto;
   }
-  .chapter-steps ul {
+  .chapter-steps > ul {
     list-style: none;
     margin: 0;
     padding: 0;
   }
-  .chapter-steps li {
+  .chapter-steps > ul > li {
     min-height: 78vh;
     display: flex;
     align-items: center;
   }
   .step-text {
-    max-width: 30rem;
+    max-width: 32rem;
     opacity: 0.32;
     transform: translateY(12px);
     transition:
       opacity 0.5s ease,
       transform 0.5s ease;
   }
-  .chapter-steps li:global(.is-current) .step-text {
+  .chapter-steps > ul > li:global(.is-current) .step-text {
     opacity: 1;
     transform: none;
   }
@@ -159,6 +162,32 @@ const screens = appText.steps.map((step) => ({
     font-size: 1.15rem;
     color: var(--ivory-quiet);
     max-width: 34ch;
+  }
+  .step-points {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+  .step-points li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--ivory);
+    font-size: 1.02rem;
+    line-height: 1.45;
+  }
+  /* The sun's or the water's mark, small, in the chapter's colour. */
+  .step-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
   }
   .chapter-cta {
     display: flex;
@@ -191,7 +220,7 @@ const screens = appText.steps.map((step) => ({
       position: relative;
       z-index: 1;
     }
-    .chapter-steps li {
+    .chapter-steps > ul > li {
       min-height: 85svh;
       align-items: flex-end;
       padding-bottom: 6svh;

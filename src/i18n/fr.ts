@@ -35,22 +35,42 @@ export const fr = {
       {
         screen: "sun",
         title: "Le cadran du jour",
-        text: "Lever, coucher, heure dorée, hauteur et direction du soleil, d'un coup d'œil. Gratuit, pour toujours.",
+        text: "Le soleil de maintenant, et toute sa journée sur un arc : fais glisser le doigt pour le suivre d'heure en heure.",
+        points: [
+          "Lever, coucher et midi solaire",
+          "Les heures dorées du matin et du soir",
+          "Hauteur et direction à chaque instant",
+        ],
       },
       {
         screen: "coast",
         title: "La course du soleil sur ta caméra",
-        text: "Vise l'horizon : la Vue 3D dessine le chemin du soleil sur l'image, heure par heure.",
+        text: "Lève ton téléphone vers l'horizon : la course du soleil se dessine sur l'image de la caméra, avec les heures.",
+        points: [
+          "Tu vois d'avance s'il passera derrière la montagne ou l'immeuble d'en face",
+          "Pour aujourd'hui ou n'importe quel jour de l'année",
+          "Pratique pour préparer une photo au coucher",
+        ],
       },
       {
         screen: "apartment",
         title: "Tes vraies heures de soleil",
-        text: "Relève l'horizon depuis ta fenêtre. Immeubles et arbres compris, Sunory compte le soleil direct, jour après jour.",
+        text: "Fais le tour de l'horizon depuis ta fenêtre ou ton balcon : Sunory garde la ligne des toits, des arbres et du relief.",
+        points: [
+          "Les heures de soleil direct, jour par jour",
+          "Le bilan de toute l'année, à partager en image",
+          "Tes lieux restent sur ton téléphone",
+        ],
       },
       {
         screen: "compass",
         title: "La carte et l'ombre des bâtiments",
-        text: "La course du soleil en 3D au-dessus de la ville, et l'ombre des immeubles qui tourne au fil des heures.",
+        text: "Incline la carte : l'arc du soleil s'élève en 3D au-dessus de la ville, et l'ombre des immeubles tourne au fil des heures.",
+        points: [
+          "Fais glisser l'heure pour voir les ombres bouger",
+          "Touche un point : au soleil ou à l'ombre, et pour combien de temps",
+          "En relief ou en vue satellite",
+        ],
       },
     ],
     featuresTitle: "Ce que fait Sunory",
@@ -130,22 +150,42 @@ export const fr = {
       {
         screen: "home-addwater",
         title: "Un verre vivant",
-        text: "Chaque gorgée remplit le verre. Penche ton téléphone : l'eau ondule et suit le mouvement.",
+        text: "Chaque gorgée remplit le verre, et l'eau ondule quand tu penches le téléphone.",
+        points: [
+          "Un verre d'eau ajouté en un geste",
+          "Café, thé, jus : chaque boisson compte",
+          "Le widget sur l'écran d'accueil de l'iPhone",
+        ],
       },
       {
         screen: "myday",
         title: "Un objectif fait pour toi",
-        text: "Calculé selon ton poids, ajusté après le sport et les soirées.",
+        text: "Ton objectif se calcule selon ton poids, puis s'ajuste à ta journée.",
+        points: [
+          "Plus d'eau après le sport, avec Apple Santé sur iPhone",
+          "Après une soirée, l'eau à reboire au ml près",
+          "Ta journée gorgée par gorgée",
+        ],
       },
       {
         screen: "planification-dashboard",
         title: "Ta routine compte toute seule",
-        text: "Le café du matin, le thé de l'après-midi : ils s'ajoutent au bon moment.",
+        text: "Les boissons de tous les jours s'ajoutent toutes seules, au moment que tu choisis.",
+        points: [
+          "Le café du matin, le thé de l'après-midi",
+          "Un rappel pour chaque verre prévu",
+          "La juste quantité à boire avant de dormir",
+        ],
       },
       {
         screen: "rewards",
         title: "Des trophées pour tenir",
-        text: "Des séries de jours à décrocher, et à partager.",
+        text: "Atteins ton objectif jour après jour, et décroche des trophées.",
+        points: [
+          "Des séries de jours d'affilée",
+          "Semaine parfaite, soirée compensée, séance validée",
+          "Une carte à partager",
+        ],
       },
     ],
     featuresTitle: "Ce que fait AquaShot",

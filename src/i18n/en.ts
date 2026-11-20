@@ -37,22 +37,42 @@ export const en: Dictionary = {
       {
         screen: "sun",
         title: "Today's sun dial",
-        text: "Sunrise, sunset, golden hour, the sun's height and direction, at a glance. Free, for good.",
+        text: "The sun right now, and its whole day on one arc: slide your finger to follow it hour by hour.",
+        points: [
+          "Sunrise, sunset and solar noon",
+          "Morning and evening golden hours",
+          "Height and direction at any moment",
+        ],
       },
       {
         screen: "coast",
         title: "The sun's path on your camera",
-        text: "Point at the horizon: the 3D view draws the sun's path over the picture, hour by hour.",
+        text: "Raise your phone to the horizon: the sun's path is drawn over the camera picture, with the hours.",
+        points: [
+          "See ahead whether it will pass behind the mountain or the building across the street",
+          "For today or any day of the year",
+          "Handy for planning a sunset photo",
+        ],
       },
       {
         screen: "apartment",
         title: "Your real hours of sun",
-        text: "Scan the horizon from your window. Buildings and trees included, Sunory counts the direct sun, day after day.",
+        text: "Sweep the horizon from your window or balcony: Sunory keeps the line of the roofs, trees and hills.",
+        points: [
+          "Hours of direct sun, day by day",
+          "The whole year's report, to share as a picture",
+          "Your places stay on your phone",
+        ],
       },
       {
         screen: "compass",
         title: "The map and building shadows",
-        text: "The sun's path in 3D above the city, and the shadows of buildings turning as the hours go by.",
+        text: "Tilt the map: the sun's arc rises in 3D above the city, and the shadows of buildings turn as the hours go by.",
+        points: [
+          "Slide the time to watch the shadows move",
+          "Tap a spot: in the sun or in the shade, and for how long",
+          "In relief or satellite view",
+        ],
       },
     ],
     featuresTitle: "What Sunory does",
@@ -131,22 +151,42 @@ export const en: Dictionary = {
       {
         screen: "home-addwater",
         title: "A living glass",
-        text: "Every sip fills the glass. Tilt your phone: the water ripples and follows along.",
+        text: "Every sip fills the glass, and the water ripples when you tilt your phone.",
+        points: [
+          "A glass of water added in one tap",
+          "Coffee, tea, juice: every drink counts",
+          "The widget on your iPhone home screen",
+        ],
       },
       {
         screen: "myday",
         title: "A goal made for you",
-        text: "Set from your weight, adjusted after workouts and nights out.",
+        text: "Your goal is set from your weight, then adjusts to your day.",
+        points: [
+          "More water after workouts, with Apple Health on iPhone",
+          "After a night out, the water to drink back, to the ml",
+          "Your day, sip by sip",
+        ],
       },
       {
         screen: "planification-dashboard",
         title: "Your routine logs itself",
-        text: "Morning coffee, afternoon tea: they are added at the right time.",
+        text: "The drinks you have every day log themselves, at the time you choose.",
+        points: [
+          "Morning coffee, afternoon tea",
+          "A reminder for every planned glass",
+          "The right amount to drink before bed",
+        ],
       },
       {
         screen: "rewards",
         title: "Trophies to keep you going",
-        text: "Streaks to earn, and to share.",
+        text: "Reach your goal day after day, and earn trophies.",
+        points: [
+          "Streaks of days in a row",
+          "Perfect week, evening made up for, workout done",
+          "A card to share",
+        ],
       },
     ],
     featuresTitle: "What AquaShot does",
