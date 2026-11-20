@@ -39,6 +39,9 @@ const screens = appText.steps.map((step) => ({
           {
             appText.steps.map((step) => (
               <li data-step={step.screen}>
+                <div class="step-phone">
+                  <Phone screens={[{ key: step.screen, image: screenImage(app, language, step.screen), alt: step.title }]} />
+                </div>
                 <div class="step-text">
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
@@ -197,50 +200,64 @@ const screens = appText.steps.map((step) => ({
     padding-bottom: 2rem;
   }
 
+  .step-phone {
+    display: none;
+  }
+
+  /*
+   * On a phone, a sticky phone and the text scrolling over it fight for the same screen: each step
+   * shows its own screen above its text instead, and the phone comes in as it scrolls into view.
+   */
   @media (max-width: 760px) {
     .chapter-grid {
       grid-template-columns: minmax(0, 1fr);
       gap: 0;
-    }
-    .is-phone-right .chapter-phone-column {
-      order: 0;
+      margin-top: 1rem;
     }
     .chapter-phone-column {
-      position: sticky;
-      top: 4.75rem;
-      z-index: 0;
-      height: 0;
-    }
-    .chapter-phone-column :global(.chapter-phone) {
-      position: relative;
-      top: 0;
-      height: 46svh;
-    }
-    .chapter-steps {
-      position: relative;
-      z-index: 1;
+      display: none;
     }
     .chapter-steps > ul > li {
-      min-height: 85svh;
-      align-items: flex-end;
-      padding-bottom: 6svh;
+      min-height: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.75rem;
+      padding-block: 2.5rem;
     }
-    .step-text {
-      opacity: 0;
-      background: rgba(15, 23, 36, 0.86);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 1.1rem 1.25rem;
-      margin-top: 50svh;
+    .step-phone {
+      display: block;
     }
-    .chapter-aquashot .step-text {
-      background: rgba(21, 15, 51, 0.82);
+    .step-phone :global(.phone) {
+      width: min(62vw, 260px);
+      margin-inline: auto;
+    }
+    .step-text,
+    .chapter-steps > ul > li:global(.is-current) .step-text {
+      opacity: 1;
+      transform: none;
     }
     .chapter-cta {
-      position: relative;
-      padding-top: 50svh;
-      padding-bottom: 4rem;
+      padding-block: 1.5rem 1rem;
+    }
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        .step-phone :global(.phone) {
+          animation: phone-arrives linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 35%;
+        }
+      }
+    }
+  }
+
+  @keyframes phone-arrives {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.92) rotate(-3deg);
+    }
+    to {
+      opacity: 1;
+      transform: none;
     }
   }
 </style>

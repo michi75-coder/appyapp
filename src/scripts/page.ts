@@ -148,7 +148,8 @@ const startScenes = () => {
 const startChapters = () => {
   for (const chapter of document.querySelectorAll<HTMLElement>("[data-chapter]")) {
     const steps = [...chapter.querySelectorAll<HTMLElement>("[data-step]")];
-    const screens = [...chapter.querySelectorAll<HTMLElement>("[data-screen]")];
+    // Only the sticky phone swaps its screens: on a phone, each step has a phone of its own.
+    const screens = [...chapter.querySelectorAll<HTMLElement>(".chapter-phone-column [data-screen]")];
     const showStep = (step: HTMLElement) => {
       for (const otherStep of steps) {
         otherStep.classList.toggle("is-current", otherStep === step);
